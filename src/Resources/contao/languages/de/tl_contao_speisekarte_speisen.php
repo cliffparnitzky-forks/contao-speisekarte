@@ -4,6 +4,7 @@ $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['titel'] = array('Bezeichnu
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['titel_legend'] = 'Speise';
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['nummer'] = array('Nummer', 'Speisen-Nummer (falls vorhanden)');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['beschreibung'] = array('Beschreibung', '');
+$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['dishpic'] = array('Bild', '');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['menge'] = array('Menge', 'Menge oder Inhalt');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['preis'] = array('Preis', '');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['einheit'] = array('Einheit', '');
