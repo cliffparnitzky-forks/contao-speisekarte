@@ -99,7 +99,7 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
     (
         '__selector__'                => array(''),
         ////'default'                 => '{titel_legend},nummer,titel,beschreibung;{Bild},picture;{Preise},menge,preis,menge2,preis2,menge3,preis3,einheit,grundpreis;{zusatzstoffe_legende},zusatzstoffe,allergene;'
-        'default'                     => '{titel_legend},nummer,titel,beschreibung;{Bild},dishpic;{Preise},menge,preis,menge2,preis2,menge3,preis3,einheit,grundpreis;{zusatzstoffe_legende},zusatzstoffe,allergene;'
+        'default'                     => '{titel_legend},nummer,titel,beschreibung;{dishpic_legend},dishpic;{preise_legend},menge,preis,menge2,preis2,menge3,preis3,einheit,grundpreis;{zusatzstoffe_legende},zusatzstoffe,allergene;'
     ),
 
     // Subpalettes

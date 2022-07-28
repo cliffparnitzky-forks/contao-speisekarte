@@ -4,11 +4,14 @@ $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['titel'] = array('Bezeichnu
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['titel_legend'] = 'Speise';
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['nummer'] = array('Nummer', 'Speisen-Nummer (falls vorhanden)');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['beschreibung'] = array('Beschreibung', '');
+$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['dishpic_legend'] = 'Bild';
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['dishpic'] = array('Bild', '');
+$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['preise_legend'] = 'Preise';
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['menge'] = array('Menge', 'Menge oder Inhalt');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['preis'] = array('Preis', '');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['einheit'] = array('Einheit', '');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['grundpreis'] = array('Grundpreis', 'Soll Grundpreis berechnet werden?');
+$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['zusatzstoffe_legende'] = 'Zusatzstoffe und Allergene';
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['zusatzstoffe'] = array('Zusatzstoffe', '');
 $GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['allergene'] = array('Allergene', '');
 
