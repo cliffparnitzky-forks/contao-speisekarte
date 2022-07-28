@@ -42,10 +42,7 @@ class ModuleContaoSpeisekarte extends Module {
 
             foreach($kategorienObjekt as $kategorie) {
 
-                $speisenObjekt = ContaoSpeisekarteSpeisenModel::findBy(
-                    'pid',
-                    $kategorie->id
-                );
+                $speisenObjekt = ContaoSpeisekarteSpeisenModel::findPublishedByPid($kategorie->id);
 
                 $speisenliste = array();
                 $zusatstoffliste = array();
