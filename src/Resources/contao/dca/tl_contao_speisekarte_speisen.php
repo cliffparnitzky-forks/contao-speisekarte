@@ -8,6 +8,15 @@
  *  note       : 20210806°0911 Start implementing image
  */
 
+use Contao\Backend;
+use Contao\BackendUser;
+use Contao\Config;
+use Contao\CoreBundle\Security\ContaoCorePermissions;
+use Contao\Image;
+use Contao\StringUtil;
+use Contao\System;
+use LinkingYou\ContaoSpeisekarte\Model\ContaoSpeisekarteSpeisenModel;
+
 $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
 (
 
@@ -21,7 +30,8 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
         (
             'keys' => array
             (
-                'id' => 'primary'
+                'id' => 'primary',
+                'pid,published' => 'index'
             )
         )
     ),
@@ -35,7 +45,7 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
             'fields'                  => array('sorting'),
             'flag'                    => 11,
             'panelLayout'             => 'search,limit',
-            'child_record_callback'   => array('Speisen', 'getSpeisen'),
+            'child_record_callback'   => array('tl_contao_speisekarte_speisen', 'getSpeisen'),
             'headerFields'            => array('titel')
         ),
         'label' => array
@@ -73,6 +83,13 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
                 'icon'                => 'delete.gif',
                 'attributes'          => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\'))return false;Backend.getScrollOffset()"'
             ),
+            'toggle' => array
+            (
+              'href'                => 'act=toggle&amp;field=published',
+              'icon'                => 'visible.svg',
+              'button_callback'     => array('tl_contao_speisekarte_speisen', 'toggleIcon')
+            ),
+
             'show' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['show'],
@@ -98,8 +115,7 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
     'palettes' => array
     (
         '__selector__'                => array(''),
-        ////'default'                 => '{titel_legend},nummer,titel,beschreibung;{Bild},picture;{Preise},menge,preis,menge2,preis2,menge3,preis3,einheit,grundpreis;{zusatzstoffe_legende},zusatzstoffe,allergene;'
-        'default'                     => '{titel_legend},nummer,titel,beschreibung;{dishpic_legend},dishpic;{preise_legend},menge,preis,menge2,preis2,menge3,preis3,einheit,grundpreis;{zusatzstoffe_legende},zusatzstoffe,allergene;'
+        'default'                     => '{titel_legend},nummer,titel,beschreibung;{dishpic_legend},dishpic;{preise_legend},menge,preis,menge2,preis2,menge3,preis3,einheit,grundpreis;{zusatzstoffe_legende},zusatzstoffe,allergene;{publish_legend},published;'
     ),
 
     // Subpalettes
@@ -362,12 +378,77 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
             ),
             //'sql'                   => "varchar(255) NOT NULL default ''"
             'sql'                     => "text NULL"
+        ),
+        'published' => array
+        (
+          'exclude'                 => true,
+          'default'                 => true,
+          'toggle'                  => true,
+          'filter'                  => true,
+          'inputType'               => 'checkbox',
+          'eval'                    => array('doNotCopy'=>true),
+          'sql'                     => "char(1) NOT NULL default '1'"
         )
     )
 );
 
-class Speisen {
+class tl_contao_speisekarte_speisen extends Backend
+{
+    /**
+     * Import the back end user object
+     */
+    public function __construct()
+    {
+      parent::__construct();
+      $this->import(BackendUser::class, 'User');
+    }
+    
     function getSpeisen($a) {
         return $a['titel'] . '<br />' . $a['beschreibung'];
     }
+    
+    /**
+     * Return the "toggle visibility" button
+     *
+     * @param array  $row
+     * @param string $href
+     * @param string $label
+     * @param string $title
+     * @param string $icon
+     * @param string $attributes
+     *
+     * @return string
+     */
+    public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+    {
+      $security = System::getContainer()->get('security.helper');
+
+      // Check permissions AFTER checking the tid, so hacking attempts are logged
+      if (!$security->isGranted(ContaoCorePermissions::USER_CAN_EDIT_FIELD_OF_TABLE, 'tl_contao_speisekarte_speisen::published'))
+      {
+        return '';
+      }
+
+      $href .= '&amp;id=' . $row['id'];
+
+      if (!$row['published'])
+      {
+        $icon = 'invisible.svg';
+      }
+
+      $objSpeise = ContaoSpeisekarteSpeisenModel::findById($row['id']);
+
+      if (!$security->isGranted(ContaoCorePermissions::USER_CAN_EDIT_ARTICLES, $objSpeise->row()))
+      {
+        if ($row['published'])
+        {
+          $icon = preg_replace('/\.svg$/i', '_.svg', $icon);
+        }
+
+        return Image::getHtml($icon) . ' ';
+      }
+
+      return '<a href="' . $this->addToUrl($href) . '" title="' . StringUtil::specialchars($title) . '" onclick="Backend.getScrollOffset();return AjaxRequest.toggleField(this,true)">' . Image::getHtml($icon, $label, 'data-icon="' . Image::getPath('visible.svg') . '" data-icon-disabled="' . Image::getPath('invisible.svg') . '" data-state="' . ($row['published'] ? 1 : 0) . '"') . '</a> ';
+    }
+
 }
