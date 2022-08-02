@@ -185,7 +185,7 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
                 'rows'       => 4,                                     // added 20210805°092217
                 'rte'        => 'tinyMCE'                              // added 20210805°092218 'rich text editor'
              ),
-            'sql'                     => "varchar(10000) NOT NULL default ''"  // added 20210805°092119
+            'sql'                     => "text NULL"
         ),
 
  /*
