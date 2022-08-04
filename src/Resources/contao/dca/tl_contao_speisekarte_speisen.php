@@ -330,26 +330,17 @@ $GLOBALS['TL_DCA']['tl_contao_speisekarte_speisen'] = array
             'label'                   => &$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['einheit'],
             'exclude'                 => true,
             'inputType'               => 'select',
-            'options'                 => array (
-                                            'Liter',
-                                            'g',       // possibly superfluous
-                                            'kg',      // possibly superfluous
-                                            'Stk'
-            ),
-            'eval'                    => array (
-                                             'includeBlankOption' => true,
-                                             'tl_class'           => 'w50 widget'
-                                         ),
+            'options'                 => array ('Liter', 'g', 'kg', 'Stk'),
+            'reference'               => &$GLOBALS['TL_LANG']['MSC']['contao_speisekarte']['einheit'],
+            'eval'                    => array ('includeBlankOption' => true, 'tl_class' => 'w50 widget'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ),
         'grundpreis' => array(
             'label'                   => &$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['grundpreis'],
             'exclude'                 => true,
             'inputType'               => 'checkbox',
-            'eval' => array(
-                'tl_class' => 'w50 widget'
-            ),
-            'sql'                     => "varchar(10) NOT NULL default ''"
+            'eval'                    => array('tl_class' => 'w50 widget'),
+            'sql'                     => "char(1) NOT NULL default ''"
         ),
         'zusatzstoffe' => array(
             'label'                   => &$GLOBALS['TL_LANG']['tl_contao_speisekarte_speisen']['zusatzstoffe'],
